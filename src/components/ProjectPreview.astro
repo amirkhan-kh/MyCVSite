@@ -1,0 +1,558 @@
+---
+interface Props {
+  kind: "responsive" | "students" | "store";
+}
+
+const { kind } = Astro.props;
+
+const devices = [
+  { cls: "desktop", label: "1440px", cols: 3 },
+  { cls: "tablet", label: "768px", cols: 2 },
+  { cls: "phone", label: "375px", cols: 1 },
+];
+
+const students = [
+  { initials: "AK", name: "Aziza Karimova", group: "FN-12", score: 96, hue: 190 },
+  { initials: "BT", name: "Bobur Toshev", group: "FN-12", score: 88, hue: 160, active: true },
+  { initials: "DR", name: "Dilnoza Rahimova", group: "FN-14", score: 91, hue: 210 },
+  { initials: "JM", name: "Jasur Mirzayev", group: "FN-14", score: 79, hue: 40 },
+];
+
+const products = [
+  { name: "Quloqchin", price: "$89", icon: "headphones", hue: 195 },
+  { name: "Smart soat", price: "$149", icon: "watch", hue: 165 },
+  { name: "Kamera", price: "$329", icon: "camera", hue: 215 },
+];
+---
+
+<div class:list={["pv", `pv--${kind}`]} aria-hidden="true">
+  {kind === "responsive" && (
+    <div class="devices">
+      {devices.map((d) => (
+        <div class:list={["device", `device--${d.cls}`]}>
+          <div class="device__screen" style={`--cols:${d.cols}`}>
+            <div class="site">
+              <div class="site__nav"><i></i><b></b><b></b><b></b></div>
+              <div class="site__hero"><i></i><i></i><span></span></div>
+              <div class="site__grid">
+                {Array.from({ length: 3 }).map(() => <span></span>)}
+              </div>
+            </div>
+          </div>
+          {d.cls === "desktop" && <div class="device__stand"></div>}
+          <span class="device__label">{d.label}</span>
+        </div>
+      ))}
+    </div>
+  )}
+
+  {kind === "students" && (
+    <div class="app">
+      <div class="app__bar">
+        <strong>O‘quvchilar <em>24</em></strong>
+        <span class="app__search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
+          Qidirish…
+        </span>
+        <span class="app__btn">+ Qo‘shish</span>
+      </div>
+      <div class="table">
+        <div class="table__head"><span>Ism</span><span>Guruh</span><span>Ball</span></div>
+        {students.map((s) => (
+          <div class:list={["table__row", s.active && "is-active"]}>
+            <span class="who">
+              <i style={`--h:${s.hue}`}>{s.initials}</i>
+              {s.name}
+            </span>
+            <span class="tag">{s.group}</span>
+            <span class="score">
+              <span class="score__bar"><span style={`width:${s.score}%`}></span></span>
+              {s.score}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {kind === "store" && (
+    <div class="shop">
+      <div class="shop__bar">
+        <strong>gadget<span>.uz</span></strong>
+        <span class="shop__nav"><b>Katalog</b><b>Aksiya</b></span>
+        <span class="shop__cart">
+          <svg viewBox="0 0 24 24"><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path d="M2 2h2l2.7 12.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L22 7H5.1" /></svg>
+          <em>3</em>
+        </span>
+      </div>
+      <div class="shop__grid">
+        {products.map((p) => (
+          <div class="product" style={`--h:${p.hue}`}>
+            <div class="product__img">
+              <svg viewBox="0 0 24 24">
+                {p.icon === "headphones" && <path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3" />}
+                {p.icon === "watch" && (<><circle cx="12" cy="12" r="6" /><path d="M12 10v2l1 1" /><path d="m16.1 7.7-.8-4a2 2 0 0 0-2-1.7h-2.6a2 2 0 0 0-2 1.6l-.8 4.1" /><path d="m7.9 16.4.8 4a2 2 0 0 0 2 1.6h2.7a2 2 0 0 0 2-1.6l.8-4" /></>)}
+                {p.icon === "camera" && (<><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z" /><circle cx="12" cy="13" r="3" /></>)}
+              </svg>
+            </div>
+            <span class="product__name">{p.name}</span>
+            <span class="product__foot"><b>{p.price}</b><i>+</i></span>
+          </div>
+        ))}
+      </div>
+      <span class="toast">✓ Savatga qo‘shildi</span>
+    </div>
+  )}
+</div>
+
+<style>
+  .pv {
+    position: relative;
+    height: 100%;
+    font-family: var(--font-sans);
+    color: #e3ecef;
+  }
+
+  svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ---------- Responsive ---------- */
+
+  .devices {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 4%;
+    height: 100%;
+    padding: 18px 16px 26px;
+  }
+
+  .device {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .device--desktop {
+    width: 54%;
+  }
+
+  .device--tablet {
+    width: 22%;
+  }
+
+  .device--phone {
+    width: 12%;
+  }
+
+  .device__screen {
+    width: 100%;
+    padding: 3px;
+    border-radius: 6px;
+    background: #0b1418;
+    box-shadow:
+      0 0 0 1.5px #3d6a7a,
+      0 14px 30px -12px rgb(0 0 0 / 0.8);
+    transition: transform 0.6s var(--ease);
+  }
+
+  .device--desktop .device__screen {
+    aspect-ratio: 16 / 10;
+  }
+
+  .device--tablet .device__screen {
+    aspect-ratio: 3 / 4;
+    border-radius: 7px;
+  }
+
+  .device--phone .device__screen {
+    aspect-ratio: 9 / 18;
+    border-radius: 7px;
+  }
+
+  .device__stand {
+    width: 22%;
+    height: 9px;
+    background: linear-gradient(#3d6a7a, #24414c);
+    clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+  }
+
+  .device__label {
+    position: absolute;
+    bottom: -18px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: #9fb4bc;
+  }
+
+  .site {
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    gap: 6%;
+    height: 100%;
+    padding: 6%;
+    border-radius: 3px;
+    background: linear-gradient(160deg, #183846, #0d1c22);
+    overflow: hidden;
+  }
+
+  .site__nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .site__nav i {
+    width: 7px;
+    height: 7px;
+    margin-right: auto;
+    border-radius: 2px;
+    background: #8ccbd8;
+  }
+
+  .site__nav b {
+    width: 12%;
+    height: 3px;
+    border-radius: 2px;
+    background: rgb(255 255 255 / 0.3);
+  }
+
+  .device--phone .site__nav b:not(:last-child) {
+    display: none;
+  }
+
+  .device--phone .site__nav b {
+    width: 30%;
+  }
+
+  .site__hero {
+    display: grid;
+    gap: 3px;
+  }
+
+  .site__hero i {
+    height: 5px;
+    width: 70%;
+    border-radius: 2px;
+    background: #e8f3f6;
+  }
+
+  .site__hero i + i {
+    width: 45%;
+    background: rgb(255 255 255 / 0.4);
+  }
+
+  .site__hero span {
+    width: 28%;
+    height: 6px;
+    margin-top: 2px;
+    border-radius: 3px;
+    background: #a3e635;
+  }
+
+  .site__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), 1fr);
+    gap: 4px;
+    align-content: start;
+  }
+
+  .site__grid span {
+    min-height: 14px;
+    border-radius: 3px;
+    background: rgb(140 203 216 / 0.25);
+  }
+
+  .device--phone .site__grid span:nth-child(n + 3),
+  .device--tablet .site__grid span:nth-child(n + 3) {
+    display: none;
+  }
+
+  /* ---------- Students ---------- */
+
+  .app {
+    display: grid;
+    gap: 8px;
+    height: 100%;
+    padding: 4px 12px 12px;
+    font-size: 10px;
+  }
+
+  .app__bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .app__bar strong {
+    margin-right: auto;
+    font-size: 12px;
+    letter-spacing: -0.01em;
+  }
+
+  .app__bar em {
+    margin-left: 3px;
+    padding: 1px 5px;
+    border-radius: 99px;
+    font-style: normal;
+    font-size: 9px;
+    color: #c9e6ec;
+    background: rgb(140 203 216 / 0.18);
+  }
+
+  .app__search {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #a9bcc3;
+    background: rgb(255 255 255 / 0.06);
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.08) inset;
+  }
+
+  .app__search svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .app__btn {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+    color: #0b1418;
+    background: #8ccbd8;
+  }
+
+  .table {
+    display: grid;
+    align-content: start;
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgb(255 255 255 / 0.03);
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.07) inset;
+  }
+
+  .table__head,
+  .table__row {
+    display: grid;
+    grid-template-columns: 1.6fr 0.6fr 1fr;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 8px;
+  }
+
+  .table__head {
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #9fb4bc;
+    background: rgb(255 255 255 / 0.04);
+  }
+
+  .table__row + .table__row {
+    border-top: 1px solid rgb(255 255 255 / 0.05);
+  }
+
+  .table__row.is-active {
+    background: rgb(140 203 216 / 0.1);
+    box-shadow: 2px 0 0 #8ccbd8 inset;
+  }
+
+  .who {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .who i {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    font-style: normal;
+    font-size: 7px;
+    font-weight: 700;
+    color: #071014;
+    background: hsl(var(--h) 55% 70%);
+  }
+
+  .tag {
+    justify-self: start;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    color: #c9e6ec;
+    background: rgb(255 255 255 / 0.06);
+  }
+
+  .score {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .score__bar {
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: rgb(255 255 255 / 0.08);
+    overflow: hidden;
+  }
+
+  .score__bar span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #2d6072, #8ccbd8);
+  }
+
+  /* ---------- Store ---------- */
+
+  .shop {
+    position: relative;
+    display: grid;
+    gap: 8px;
+    height: 100%;
+    padding: 4px 12px 12px;
+    font-size: 10px;
+  }
+
+  .shop__bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .shop__bar strong {
+    font-size: 12px;
+    letter-spacing: -0.02em;
+  }
+
+  .shop__bar strong span {
+    color: #8ccbd8;
+  }
+
+  .shop__nav {
+    display: flex;
+    gap: 8px;
+    margin-right: auto;
+    color: #a9bcc3;
+  }
+
+  .shop__nav b {
+    font-weight: 500;
+  }
+
+  .shop__cart {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: rgb(255 255 255 / 0.06);
+  }
+
+  .shop__cart svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .shop__cart em {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    display: grid;
+    place-items: center;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    font-style: normal;
+    font-size: 7.5px;
+    font-weight: 800;
+    color: #0b1418;
+    background: #a3e635;
+  }
+
+  .shop__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 7px;
+  }
+
+  .product {
+    display: grid;
+    gap: 4px;
+    padding: 5px;
+    border-radius: 8px;
+    background: rgb(255 255 255 / 0.04);
+    box-shadow: 0 0 0 1px rgb(255 255 255 / 0.07) inset;
+  }
+
+  .product__img {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 3;
+    border-radius: 5px;
+    color: #e8f3f6;
+    background: radial-gradient(circle at 50% 40%, hsl(var(--h) 45% 40%), #10232b 75%);
+  }
+
+  .product__img svg {
+    width: 38%;
+    height: auto;
+    stroke-width: 1.6;
+  }
+
+  .product__name {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .product__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .product__foot b {
+    color: #c9e6ec;
+  }
+
+  .product__foot i {
+    display: grid;
+    place-items: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    font-style: normal;
+    font-weight: 800;
+    color: #0b1418;
+    background: #8ccbd8;
+  }
+
+  .toast {
+    position: absolute;
+    right: 42px;
+    top: 7px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 9px;
+    font-weight: 600;
+    color: #0b1418;
+    background: #a3e635;
+    box-shadow: 0 6px 16px -4px rgb(0 0 0 / 0.6);
+  }
+</style>

@@ -1,0 +1,293 @@
+---
+import { mentor, experience, skills } from "../data/site";
+---
+
+<section id="ustoz" class="section" aria-labelledby="ustoz-title">
+  <div class="container mentor">
+    <div class="mentor__intro">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Ustozingiz</p>
+        <h2 id="ustoz-title" class="h2">
+          {mentor.name} — <span class="gradient-text">real loyihalar</span> tajribasi bilan o‘qitadi
+        </h2>
+        <p class="lead">{mentor.bio}</p>
+      </div>
+
+      <ul class="highlights" data-stagger>
+        {mentor.highlights.map((h) => (
+          <li class="card spot">
+            <strong class="gradient-text">{h.value}</strong>
+            <span>{h.label}</span>
+          </li>
+        ))}
+      </ul>
+
+      <div class="skills card" data-reveal>
+        <h3 class="skills__title">Texnologiyalar steki</h3>
+        <dl class="skills__list">
+          {skills.map((s) => (
+            <div class="skills__row">
+              <dt>{s.group}</dt>
+              <dd>
+                <ul>
+                  {s.items.map((it) => <li class="chip">{it}</li>)}
+                </ul>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+
+    <div class="timeline" data-timeline>
+      <h3 class="timeline__title" data-reveal>Ish tajribasi</h3>
+      <div class="timeline__line" aria-hidden="true">
+        <div class="timeline__fill" data-timeline-fill></div>
+        <span class="timeline__tip" data-timeline-tip></span>
+      </div>
+      <ol class="timeline__list">
+        {experience.map((e) => (
+          <li class:list={["job", e.current && "job--current"]} data-reveal>
+            <span class="job__dot" aria-hidden="true"></span>
+            <div class="job__card card spot">
+              <p class="job__period">{e.period}</p>
+              <h4 class="job__company">{e.company}</h4>
+              <p class="job__role">
+                {e.role} <span>· {e.place}</span>
+              </p>
+              <p class="job__text">{e.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .mentor {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 6vw, 80px);
+    align-items: start;
+  }
+
+  .mentor__intro {
+    display: grid;
+    gap: 24px;
+  }
+
+  .mentor__intro .section-head {
+    margin-bottom: 12px;
+  }
+
+  .highlights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .highlights li {
+    display: grid;
+    gap: 4px;
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .highlights strong {
+    font-size: 1.25rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .highlights span {
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+
+  .skills {
+    padding: 26px;
+  }
+
+  .skills__title {
+    margin-bottom: 18px;
+    font-size: 1.125rem;
+    letter-spacing: -0.01em;
+  }
+
+  .skills__list {
+    display: grid;
+    gap: 16px;
+    margin: 0;
+  }
+
+  .skills__row {
+    display: grid;
+    gap: 8px;
+  }
+
+  .skills__row dt {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .skills__row dd {
+    margin: 0;
+  }
+
+  .skills__row ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .skills .chip {
+    transition:
+      box-shadow 0.25s,
+      color 0.25s;
+  }
+
+  .skills .chip:hover {
+    color: #fff;
+    box-shadow: 0 0 0 1px rgb(var(--accent-light-rgb) / 0.55) inset, 0 0 20px -4px rgb(36 86 104 / 0.9);
+  }
+
+  /* ---------- Timeline ---------- */
+
+  .timeline {
+    position: relative;
+    display: grid;
+    gap: 20px;
+  }
+
+  .timeline__title {
+    font-size: 1.125rem;
+    padding-left: 44px;
+  }
+
+  .timeline__line {
+    position: absolute;
+    top: 64px;
+    bottom: 40px;
+    left: 11px;
+    width: 2px;
+    border-radius: 2px;
+    background: rgb(45 96 114 / 0.35);
+  }
+
+  .timeline__fill {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(180deg, #2d6072, var(--accent-light));
+    transform-origin: 50% 0;
+  }
+
+  .timeline__tip {
+    display: none;
+    position: absolute;
+    top: -5px;
+    left: -4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #e8f3f6;
+    box-shadow:
+      0 0 0 4px rgb(45 96 114 / 0.6),
+      0 0 18px 4px rgb(var(--accent-light-rgb) / 0.7);
+  }
+
+  :global(.js) .timeline__tip {
+    display: block;
+  }
+
+  .timeline__list {
+    display: grid;
+    gap: 16px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .job {
+    position: relative;
+    padding-left: 44px;
+  }
+
+  .job__dot {
+    position: absolute;
+    left: 4px;
+    top: 30px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--bg);
+    box-shadow: 0 0 0 2px #2d6072 inset;
+    transition:
+      background-color 0.4s var(--ease),
+      box-shadow 0.4s var(--ease);
+  }
+
+  :global(html:not(.js)) .job__dot,
+  .job__dot:global(.is-active) {
+    background: #2d6072;
+    box-shadow:
+      0 0 0 2px var(--accent-light) inset,
+      0 0 18px rgb(var(--accent-light-rgb) / 0.55);
+  }
+
+  .job__card {
+    display: grid;
+    gap: 6px;
+    padding: 22px 24px;
+    border-radius: 22px;
+    transition: translate 0.4s var(--ease);
+  }
+
+  .job__card:hover {
+    translate: 6px 0;
+  }
+
+  .job__period {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--accent-light);
+  }
+
+
+  .job__company {
+    margin: 0;
+    font-size: 1.375rem;
+    letter-spacing: -0.03em;
+  }
+
+  .job__role {
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+
+  .job__role span {
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  .job__text {
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+
+  @media (max-width: 960px) {
+    .mentor {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .highlights {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

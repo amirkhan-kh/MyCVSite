@@ -1,0 +1,67 @@
+---
+import { stats } from "../data/site";
+---
+
+<section class="stats-wrap" aria-label="Kurs raqamlarda">
+  <div class="container">
+    <ul class="stats card" data-stagger>
+      {stats.map((s, i) => (
+        <li class="stat spot">
+          <span class:list={["stat__value", i === 0 && "gradient-text"]}>
+            <span data-count={s.count}>{s.value}</span>{s.suffix}
+          </span>
+          <span class="stat__label">{s.label}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .stats-wrap {
+    padding-top: clamp(40px, 6vw, 72px);
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .stat {
+    position: relative;
+    display: grid;
+    gap: 6px;
+    padding: clamp(24px, 3vw, 36px);
+  }
+
+  .stat + .stat {
+    border-left: 1px solid var(--border);
+  }
+
+  .stat__value {
+    font-size: clamp(2.5rem, 5vw, 3.75rem);
+    font-weight: 750;
+    line-height: 1;
+    letter-spacing: -0.045em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat__label {
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+
+  @media (max-width: 760px) {
+    .stats {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .stat:nth-child(3) {
+      border-left: 0;
+    }
+
+    .stat:nth-child(n + 3) {
+      border-top: 1px solid var(--border);
+    }
+  }
+</style>

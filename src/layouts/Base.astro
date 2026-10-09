@@ -1,0 +1,65 @@
+---
+import "../styles/global.css";
+import interTight from "@fontsource-variable/inter-tight/files/inter-tight-latin-wght-normal.woff2?url";
+import { site, mentor, contacts } from "../data/site";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Noldan Junior Frontend dasturchigacha — 7 oyda",
+  description: site.description,
+  inLanguage: "uz",
+  provider: {
+    "@type": "EducationalOrganization",
+    name: "Geeks Andijan",
+    telephone: contacts.phone,
+    sameAs: [contacts.instagram, contacts.telegram],
+  },
+  instructor: { "@type": "Person", name: mentor.name, jobTitle: "Frontend dasturchi" },
+};
+---
+
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{site.title}</title>
+    <meta name="description" content={site.description} />
+    <meta name="author" content={mentor.name} />
+    <meta name="theme-color" content="#05080b" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="uz_UZ" />
+    <meta property="og:title" content={site.title} />
+    <meta property="og:description" content={site.description} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href={interTight} as="font" type="font/woff2" crossorigin />
+
+    <script is:inline>
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("js");
+        // Reveal targets start hidden; never leave them hidden if the motion script fails to run.
+        setTimeout(function () {
+          if (!window.__motionReady) document.documentElement.classList.remove("js");
+        }, 2500);
+      }
+    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Asosiy kontentga o‘tish</a>
+    <div class="cosmos" aria-hidden="true">
+      <div class="cosmos__aurora cosmos__aurora--a"></div>
+      <div class="cosmos__aurora cosmos__aurora--b"></div>
+      <div class="cosmos__aurora cosmos__aurora--c"></div>
+      <div class="cosmos__stars"></div>
+      <div class="cosmos__stars cosmos__stars--far"></div>
+      <div class="cosmos__grain"></div>
+    </div>
+    <slot />
+    <script>
+      import "../scripts/motion";
+    </script>
+  </body>
+</html>

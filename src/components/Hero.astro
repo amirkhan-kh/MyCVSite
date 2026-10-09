@@ -1,0 +1,254 @@
+---
+import { Picture } from "astro:assets";
+import Icon from "./Icon.astro";
+import photo from "../assets/amirxon-full.jpg";
+import { hero, mentor, contacts } from "../data/site";
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container hero__grid">
+    <div class="hero__copy">
+      <p class="badge" data-hero>
+        <span class="badge__dot" aria-hidden="true"></span>
+        {hero.badge}
+      </p>
+
+      <h1 id="hero-title" class="title">
+        {hero.titleLines.map((line) => <><span class="title__line">{line}</span>{" "}</>)}
+        <span class="title__line">
+          <span class="title__dash" aria-hidden="true"></span>
+          <span class="gradient-text">{hero.accent}</span>
+        </span>
+      </h1>
+
+      <p class="lead hero__text">{hero.text}</p>
+
+      <div class="hero__actions" data-hero>
+        <a class="btn btn--primary" href={contacts.telegram} target="_blank" rel="noopener noreferrer" data-magnetic>
+          {hero.primary}
+          <Icon name="arrow-up-right" />
+        </a>
+        <a class="btn btn--ghost" href="#dastur" data-magnetic>{hero.secondary}</a>
+      </div>
+
+      <ul class="hero__chips" data-hero aria-label="Kurs texnologiyalari">
+        {hero.chips.map((c) => <li class="chip">{c}</li>)}
+      </ul>
+    </div>
+
+    <figure class="frame">
+      <span class="frame__corner frame__corner--tl" aria-hidden="true"></span>
+      <span class="frame__corner frame__corner--tr" aria-hidden="true"></span>
+      <span class="frame__corner frame__corner--bl" aria-hidden="true"></span>
+      <span class="frame__corner frame__corner--br" aria-hidden="true"></span>
+      <div class="frame__photo">
+        <Picture
+          src={photo}
+          alt={`${mentor.name} — Frontend dasturchi va kurs ustozi`}
+          formats={["avif", "webp"]}
+          widths={[360, 540, 720, 960]}
+          sizes="(max-width: 900px) 90vw, 510px"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+      <figcaption class="frame__caption">
+        <strong>{mentor.name}</strong>
+        <span>{mentor.role}</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding: clamp(120px, 16vw, 170px) 0 clamp(60px, 8vw, 100px);
+  }
+
+  .hero__grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: clamp(40px, 5vw, 72px);
+  }
+
+  .hero__copy {
+    display: grid;
+    gap: 28px;
+    justify-items: start;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 16px 7px 12px;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: #d9f99d;
+    background: rgb(163 230 53 / 0.08);
+    box-shadow: 0 0 0 1px rgb(163 230 53 / 0.25) inset;
+  }
+
+  .badge__dot {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #a3e635;
+  }
+
+  .badge__dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: #a3e635;
+    animation: ping 2s var(--ease) infinite;
+  }
+
+  @keyframes ping {
+    to {
+      transform: scale(3);
+      opacity: 0;
+    }
+  }
+
+  .title {
+    display: grid;
+    font-size: clamp(2.25rem, 6.4vw + 0.2rem, 5.6rem);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    font-weight: 750;
+  }
+
+  .title__line {
+    display: flex;
+    align-items: center;
+    gap: 0.22em;
+  }
+
+  .title__dash {
+    display: inline-block;
+    width: 0.8em;
+    height: 0.09em;
+    border-radius: 99px;
+    background: var(--grad);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .hero__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ---------- Framed portrait ---------- */
+
+  .frame {
+    --gap: 18px;
+    --corner: 44px;
+    position: relative;
+    width: min(100%, 540px);
+    margin: 0 0 0 auto;
+    padding: var(--gap);
+  }
+
+  .frame__corner {
+    position: absolute;
+    width: var(--corner);
+    height: var(--corner);
+    border: 0 solid var(--accent-light);
+  }
+
+  .frame__corner--tl {
+    top: 0;
+    left: 0;
+    border-width: 2px 0 0 2px;
+    border-top-left-radius: 6px;
+  }
+
+  .frame__corner--tr {
+    top: 0;
+    right: 0;
+    border-width: 2px 2px 0 0;
+    border-top-right-radius: 6px;
+  }
+
+  .frame__corner--bl {
+    bottom: 0;
+    left: 0;
+    border-width: 0 0 2px 2px;
+    border-bottom-left-radius: 6px;
+  }
+
+  .frame__corner--br {
+    bottom: 0;
+    right: 0;
+    border-width: 0 2px 2px 0;
+    border-bottom-right-radius: 6px;
+  }
+
+  .frame__photo {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: 4px;
+    background: var(--accent);
+    box-shadow:
+      0 0 0 1px var(--border-strong),
+      0 40px 80px -30px rgb(0 0 0 / 0.8);
+  }
+
+  .frame__photo::after {
+    content: "";
+    position: absolute;
+    inset: 55% 0 0;
+    background: linear-gradient(180deg, transparent, rgb(5 8 11 / 0.85));
+  }
+
+  .frame__photo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 20%;
+  }
+
+  .frame__caption {
+    position: absolute;
+    left: calc(var(--gap) + 22px);
+    right: calc(var(--gap) + 22px);
+    bottom: calc(var(--gap) + 20px);
+    display: grid;
+    gap: 2px;
+  }
+
+  .frame__caption strong {
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+  }
+
+  .frame__caption span {
+    font-size: 0.875rem;
+    color: #c9d6db;
+  }
+
+  @media (max-width: 900px) {
+    .hero__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .frame {
+      order: -1;
+      width: min(100%, 440px);
+      margin-inline: auto;
+    }
+  }
+</style>

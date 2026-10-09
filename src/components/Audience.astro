@@ -1,0 +1,127 @@
+---
+import Icon from "./Icon.astro";
+import { audience, format } from "../data/site";
+---
+
+<section id="format" class="section" aria-label="Kimlar uchun va o‘qish formati">
+  <div class="container grid" data-stagger>
+    <article class="panel card spot">
+      <p class="eyebrow">{audience.eyebrow}</p>
+      <h2 class="panel__title">
+        Tajriba shart emas <span class="gradient-text">— noldan boshlaymiz</span>
+      </h2>
+      <ul class="who">
+        {audience.items.map((it) => (
+          <li>
+            <span class="who__icon"><Icon name="arrow-right" size={14} /></span>
+            {it}
+          </li>
+        ))}
+      </ul>
+    </article>
+
+    <article class="panel card spot">
+      <p class="eyebrow">{format.eyebrow}</p>
+      <h2 class="panel__title">
+        Offline, Andijonda, <span class="gradient-text">kichik guruhda</span>
+      </h2>
+      <ul class="tiles">
+        {format.items.map((f) => (
+          <li class="tile">
+            <span class="tile__label">{f.label}</span>
+            <strong class="tile__value">{f.value}</strong>
+          </li>
+        ))}
+      </ul>
+    </article>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .panel {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: clamp(28px, 4vw, 44px);
+  }
+
+  .panel__title {
+    font-size: clamp(1.75rem, 3vw, 2.375rem);
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+
+  .who {
+    display: grid;
+    gap: 14px;
+  }
+
+  .who li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #d6e2e7;
+  }
+
+  .who__icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    color: var(--accent-light);
+    background: rgb(var(--accent-rgb) / 0.8);
+    box-shadow: 0 0 0 1px rgb(var(--accent-light-rgb) / 0.25) inset;
+  }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .tile {
+    display: grid;
+    gap: 4px;
+    padding: 18px 20px;
+    border-radius: 18px;
+    background: rgb(255 255 255 / 0.04);
+    box-shadow: 0 0 0 1px var(--border) inset;
+    transition: background-color 0.3s;
+  }
+
+  .tile:hover {
+    background: rgb(255 255 255 / 0.07);
+  }
+
+  .tile__label {
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+
+  .tile__value {
+    font-size: 1.1875rem;
+    letter-spacing: -0.02em;
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .tiles {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

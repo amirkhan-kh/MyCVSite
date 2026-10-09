@@ -1,0 +1,92 @@
+---
+import Icon from "./Icon.astro";
+import { contacts } from "../data/site";
+---
+
+<section class="section cta-wrap" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta glow-border" data-reveal>
+      <div class="cta__planet" aria-hidden="true"></div>
+      <p class="eyebrow">Joylar soni cheklangan · 10–12 o‘quvchi</p>
+      <h2 id="cta-title" class="cta__title">
+        Kelajak kasbingizni <span class="gradient-text">bugun</span> boshlang
+      </h2>
+      <p class="lead">
+        Bepul konsultatsiyada kurs dasturi, jadval va narx haqida batafsil gaplashamiz — sizga mos
+        guruhni birga tanlaymiz.
+      </p>
+      <div class="cta__actions">
+        <a class="btn btn--primary" href={contacts.telegram} target="_blank" rel="noopener noreferrer" data-magnetic>
+          <Icon name="send" />
+          Telegram orqali yozilish
+        </a>
+        <a class="btn btn--ghost" href={contacts.phoneHref} data-magnetic>
+          <Icon name="phone" />
+          {contacts.phone}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-wrap {
+    padding-top: 0;
+  }
+
+  .cta {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 22px;
+    padding: clamp(56px, 9vw, 110px) clamp(24px, 5vw, 64px);
+    border-radius: 36px;
+    text-align: center;
+    overflow: hidden;
+    isolation: isolate;
+    background:
+      radial-gradient(80% 120% at 50% 120%, rgb(36 86 104 / 0.75), transparent 60%),
+      radial-gradient(50% 80% at 100% 0%, rgb(var(--accent-rgb) / 0.9), transparent 60%),
+      rgb(8 14 18 / 0.75);
+    box-shadow: 0 0 0 1px var(--border) inset;
+  }
+
+  .cta__planet {
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    bottom: -140%;
+    width: 160%;
+    aspect-ratio: 1;
+    translate: -50% 0;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, transparent 96%, rgb(var(--accent-light-rgb) / 0.45) 99.5%, transparent);
+    animation: rise 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes rise {
+    to {
+      transform: translateY(-4%);
+    }
+  }
+
+  .cta__title {
+    font-size: clamp(2.25rem, 6vw, 4.75rem);
+    line-height: 1;
+    letter-spacing: -0.045em;
+    font-weight: 750;
+    text-wrap: balance;
+  }
+
+  .cta .lead {
+    margin-inline: auto;
+  }
+
+  .cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 8px;
+  }
+</style>
